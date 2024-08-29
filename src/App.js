@@ -14,6 +14,7 @@ import Footer from "./componentes/Footer/footer";
 import InfoReserva from "./componentes/cliente/reservas/infro reserva";
 import Reservas from "./componentes/cliente/reservas/inicioreserva";
 import ReservaLocal from "./componentes/cliente/reservas/reservalocal";
+import FormularioRegiEmp from './componentes/administrador/usuarios/regsitroempleados'
 const App = () => {
   const userRole = localStorage.getItem('role');
 
@@ -41,11 +42,12 @@ const App = () => {
             <Route path='/' element={<Index />} />
             <Route path="/login" element={<Login />} />
             <Route path="/RegistroCliente" element={<FormularioRegistro />} />
-            <Route ath="/consultausarios" element={<ConsultaUsuarios />} />
-            <Route ath="/footer" element={<Footer />} />
-            <Route ath="/infro reserva" element={<InfoReserva />} />
-            <Route ath="/inicioreserva" element={<Reservas />} />
-            <Route ath="/reservalocal" element={<ReservaLocal />} />
+            <Route path="/consultausarios" element={<ConsultaUsuarios />} />
+            <Route path="/footer" element={<Footer />} />
+            <Route path="/infro reserva" element={<InfoReserva />} />
+            <Route path="/inicioreserva" element={<Reservas />} />
+            <Route path="/reservalocal" element={<ReservaLocal />} />
+            <Route path="/regsitroempleados" element={<FormularioRegiEmp />} />
 
           </Routes>
         </Router>

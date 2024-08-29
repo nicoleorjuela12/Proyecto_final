@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
 import Swal from 'sweetalert2'; // Importa SweetAlert
-import BarraNormal from "../barras/barra_normal";
+import Footer from "../../componentes/Footer/footer";
 
 const Login = () => {
     const [formData, setFormData] = useState({
@@ -77,7 +77,6 @@ const Login = () => {
             <title>Iniciar Sesión</title>
             <link href="../../index.css" rel="stylesheet" />
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
-            <BarraNormal />
             <div className="bg-gray-100 flex justify-center items-center h-screen">
                 {/* Left: Image */}
                 <div className="w-1/2 h-screen hidden lg:block">
@@ -141,6 +140,7 @@ const Login = () => {
                     </div>
                 </div>
             </div>
+            <Footer/>
         </div>
     );
 }

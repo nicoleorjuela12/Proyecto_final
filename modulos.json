@@ -62,37 +62,80 @@
       "rol": "Cliente",
       "estado": "Activo"
     },
-
     {
-      "id": "admin01",
-      "nombre": "Ana",
-      "telefono": "3051234567",
-      "numero_documento": "1234567890",
-      "tipo_documento": "Cédula de Ciudadanía",
-      "direccion": "Av. Carrera 7 # 50-21",
-      "barrio": "Centro",
-      "email": "ana.admin@example.com",
-      "contrasena": "admin1234",
+      "id": "ccf3e",
+      "nombre": "pablo",
+      "telefono": "3052970187",
+      "numero_documento": "1012087044",
+      "tipo_documento": "Cedula de ciudadania",
+      "direccion": "cll 133 # 156 a 20",
+      "barrio": "santa rita",
+      "email": "pablo852@gmail.com",
+      "contrasena": "hola1234",
       "rol": "administrador",
-      "estado": "Activo",
-      "titulo": "Administradora General"
+      "estado": "Activo"
+    },
+    {
+      "id": "cc3e",
+      "nombre": "pablo",
+      "telefono": "3052970187",
+      "numero_documento": "1011287044",
+      "tipo_documento": "Cedula de ciudadania",
+      "direccion": "cll 133 # 156 a 20",
+      "barrio": "santa rita",
+      "email": "pabl222o@gmail.com",
+      "contrasena": "hola1234",
+      "rol": "administrador",
+      "estado": "Activo"
+    },
+    {
+      "id": "a9ab",
+      "rol": "community_manager",
+      "nombre": "nicole ",
+      "telefono": "54556565656",
+      "numero_documento": "1025633656",
+      "tipo_documento": "Cédula de ciudadanía",
+      "direccion": "cll 133 # 156 a 20",
+      "email": "est.navila8ggffg9@smart.edu.co",
+      "contrasena": "sd5f56dsf565",
+      "redes": "Instagram",
+      "horario": "",
+      "titulo": "",
+      "estado": "Activo"
+    },
+    {
+      "id": "5940",
+      "rol": "mesero",
+      "nombre": "Julian",
+      "telefono": "3223918335",
+      "numero_documento": "1019087052",
+      "tipo_documento": "Cédula de ciudadanía",
+      "direccion": "cll 133 # 156 a 20",
+      "email": "lyd55abrigittep@hotmail.com",
+      "contrasena": "12345896",
+      "redes": "",
+      "horario": "Tarde",
+      "titulo": "",
+      "estado": "Activo"
+    },
+    {
+      "id": "1f4c",
+      "rol": "community_manager",
+      "nombre": "nicole ",
+      "telefono": "3148812180",
+      "numero_documento": "1019087047",
+      "tipo_documento": "Cédula de ciudadanía",
+      "direccion": "cll 133 # 156 a 20",
+      "email": "est.navila8gggg66g9@smart.edu.co",
+      "contrasena": "1253485",
+      "redes": "Facebook",
+      "horario": "",
+      "titulo": "",
+      "estado": "Activo"
     }
-    
   ],
-
-  "reservas":[
-
-  ],
-
-  "productos":[
-
-  ],
-
-  "pedidos":[
-
-  ],
-
-  "eventos":[
-
-  ]
+  "reservas": [],
+  "productos": [],
+  "pedidos": [],
+  "eventos": []
 }

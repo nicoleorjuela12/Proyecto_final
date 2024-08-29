@@ -1,11 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import BarraAdmin from "../../barras/BarraAdministrador";
-const ConsultaUsuarios = () => {
+import Swal from 'sweetalert2'; // Importar SweetAlert2
+import '../../../styles/estilos_tabla.css';
+import { useNavigate } from 'react-router-dom'; // Importar useNavigate
+import Footer from'../../../componentes/Footer/footer';
 
+const ConsultaUsuarios = () => {
   const [usuarios, setUsuarios] = useState([]);
   const [loading, setLoading] = useState(true);
   const [userRole, setUserRole] = useState(null);
+  const navigate = useNavigate(); // Hook para la navegación
 
   useEffect(() => {
     // Obtener el rol del usuario desde localStorage
@@ -29,11 +34,32 @@ const ConsultaUsuarios = () => {
 
   const handleEliminar = async (usuarioId) => {
     try {
-      await axios.put(`http://localhost:3000/usuarios/${usuarioId}`, { estado: 'Inactivo' }); 
-      // Actualiza la lista de usuarios después de la eliminación
-      setUsuarios(usuarios.map(usuario =>
-        usuario.id === usuarioId ? { ...usuario, estado: 'Inactivo' } : usuario
-      ));
+      // Mostrar el alerta de confirmación
+      const result = await Swal.fire({
+        title: '¿Estás seguro?',
+        text: "Una vez eliminado, no podrás recuperar este usuario!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sí, eliminar!',
+        cancelButtonText: 'Cancelar'
+      });
+
+      // Si el usuario confirma la eliminación
+      if (result.isConfirmed) {
+        await axios.put(`http://localhost:3000/usuarios/${usuarioId}`, { estado: 'Inactivo' });
+        // Actualiza la lista de usuarios después de la eliminación
+        setUsuarios(usuarios.map(usuario =>
+          usuario.id === usuarioId ? { ...usuario, estado: 'Inactivo' } : usuario
+        ));
+        // Mostrar un mensaje de éxito
+        Swal.fire(
+          'Eliminado!',
+          'El usuario ha sido eliminado.',
+          'success'
+        );
+      }
     } catch (error) {
       console.error('Error updating usuario:', error);
     }
@@ -59,6 +85,7 @@ const ConsultaUsuarios = () => {
       <title>Mostrar Registros</title>
       <BarraAdmin />
       <div className="table-container">
+        <button type="button" className="btn btn-primary" onClick={() => navigate('/regsitroempleados')}>Agregar Usuario</button>
         <h1 className="title">Lista de Registros</h1>
         <table id="registrosTable">
           <thead>
@@ -83,7 +110,7 @@ const ConsultaUsuarios = () => {
                 <td>{usuario.tipo_documento}</td>
                 <td>{usuario.direccion}</td>
                 <td>{usuario.barrio}</td>
-                <td>{usuario.correo_electronico}</td>
+                <td>{usuario.email}</td>
                 <td>{usuario.rol}</td>
                 <td>
                   {usuario.estado === 'Activo' && (
@@ -95,6 +122,7 @@ const ConsultaUsuarios = () => {
           </tbody>
         </table>
       </div>
+      <Footer/>
     </div>
   );
 };

@@ -77,7 +77,7 @@ const BarraNormal = () => {
                 <i className="fa fa-home mr-2" /> Inicio
               </Link>
               <Link
-                to="/productos"
+                to="/"
                 className="flex items-center text-yellow-600 cursor-pointer transition-colors duration-300 font-semibold"
               >
                 <i className="fa fa-box mr-2" /> Productos
@@ -95,19 +95,19 @@ const BarraNormal = () => {
                 </div>
               </div>
               <Link
-                to="/pedidos"
+                to="/"
                 className="flex items-center text-gray-900 hover:text-yellow-800 cursor-pointer transition-colors duration-300 font-semibold"
               >
                 <i className="fa fa-shopping-basket mr-2" /> Pedidos
               </Link>
               <Link
-                to="/eventos"
+                to="/"
                 className="flex items-center text-gray-900 hover:text-yellow-800 cursor-pointer transition-colors duration-300 font-semibold"
               >
                 <i className="fa fa-calendar-check-o mr-2" /> Eventos
               </Link>
               <Link
-                to="/servicios"
+                to="/"
                 className="flex items-center text-gray-900 hover:text-yellow-800 cursor-pointer transition-colors duration-300 font-semibold"
               >
                 <i className="fa fa-concierge-bell mr-2" /> Servicios

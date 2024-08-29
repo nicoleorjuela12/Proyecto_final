@@ -8,8 +8,8 @@ const Footer = () => {
   {/* Footer */}
   <footer className="text-center text-lg-start text-dark" style={{backgroundColor: '#fff8e7'}}>
     {/* Section: Social media */}
-    <section className="d-flex justify-content-between p-4 text-white" style={{backgroundColor: 'gold'}}>
-    </section>
+    <section className="d-flex justify-content-between p-4 text-white" style={{ background: 'linear-gradient(to right, #f7e199, #f7e1ae, #fbe49d)'}}
+>    </section>
     {/* Section: Social media */}
     {/* Section: Links  */}
     <section className>
@@ -82,7 +82,7 @@ const Footer = () => {
     </section>
     {/* Copyright */}
     <div className="text-center p-3" style={{backgroundColor: 'rgba(0, 0, 0, 0.2)'}}>
-      © 2024 Mila Gastro Fusión. Todos los derechos reservados
+      © 2024 Mila Gastro Fusión. Todos los derechos reservados --- EPNI Industrion
     </div>
     {/* Copyright */}
   </footer>

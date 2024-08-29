@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
 import Swal from 'sweetalert2'; // Importa SweetAlert
-import BarraNormal from "../barras/barra_normal";
+import Footer from "../../componentes/Footer/footer";
 
 const FormularioRegistro = () => {
   const [formData, setFormData] = useState({
@@ -113,7 +113,6 @@ const FormularioRegistro = () => {
           }
         `}
       </style>
-      <BarraNormal />
       <div className="h-screen flex flex-col lg:flex-row mt-0">
         {/* Imagen de fondo */}
         <div className="hidden lg:flex w-full lg:w-1/2 espacio_imagen1 justify-around items-center">
@@ -220,6 +219,7 @@ const FormularioRegistro = () => {
           </div>
         </div>
       </div>
+      <Footer/>
     </div>
   );
 };

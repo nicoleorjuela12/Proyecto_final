@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import { useNavigate } from 'react-router-dom';
+import Footer from '../../../componentes/Footer/footer'
+
 
 const FormularioRegiEmp = () => {
   const [formData, setFormData] = useState({
@@ -15,8 +18,10 @@ const FormularioRegiEmp = () => {
     redes: '',
     horario: '',
     titulo: '',
-    estado:'Activo'
+    estado: 'Activo'
   });
+
+  const navigate = useNavigate(); // Para redireccionar al usuario después del registro
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -29,22 +34,65 @@ const FormularioRegiEmp = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:3000/usuarios', formData);
-      Swal.fire({
-        icon: 'success',
-        title: 'Registro exitoso',
-        text: 'Tu registro se ha completado con éxito.',
-        confirmButtonText: 'Aceptar'
-      });
-      console.log(response.data);
+      // Verificar si el usuario ya está registrado
+      const emailResponse = await axios.get(`http://localhost:3000/usuarios?email=${encodeURIComponent(formData.email)}`);
+      const existingEmails = emailResponse.data;
+
+      const documentoResponse = await axios.get(`http://localhost:3000/usuarios?numero_documento=${encodeURIComponent(formData.numero_documento)}`);
+      const existingDocumentos = documentoResponse.data;
+
+      if (existingEmails.length > 0 || existingDocumentos.length > 0) {
+        // Usuario ya registrado
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'El usuario ya está registrado. Por favor, usa otro correo electrónico o número de documento.',
+        });
+
+        // Limpiar el formulario
+        setFormData({
+          rol: '',
+          nombre: '',
+          telefono: '',
+          numero_documento: '',
+          tipo_documento: '',
+          direccion: '',
+          email: '',
+          contrasena: '',
+          redes: '',
+          horario: '',
+          titulo: '',
+          estado: 'Activo'
+        });
+      } else {
+        // Enviar los datos del formulario
+        const registerResponse = await axios.post('http://localhost:3000/usuarios', formData);
+
+        if (registerResponse.status === 201) {
+          // Registro exitoso
+          Swal.fire({
+            icon: 'success',
+            title: 'Éxito',
+            text: 'Registro completado exitosamente.',
+          }).then(() => {
+            // Redirigir al usuario a la página de inicio usando useNavigate
+            navigate('/consultausarios'); // Redirige a la página de inicio
+          });
+        } else {
+          // Problema con el registro
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Hubo un problema con el registro.',
+          });
+        }
+      }
     } catch (error) {
       Swal.fire({
         icon: 'error',
         title: 'Error',
-        text: 'Hubo un problema al registrar. Inténtalo de nuevo.',
-        confirmButtonText: 'Aceptar'
+        text: 'Hubo un problema con la verificación del usuario.',
       });
-      console.error('Error al registrar:', error);
     }
   };
 
@@ -117,37 +165,44 @@ const FormularioRegiEmp = () => {
                 <label htmlFor="telefono" className="text-gray-700 font-semibold text-xs">Teléfono</label>
                 <div className="flex items-center border-2 border-yellow-300 py-1 px-2 rounded-md w-full">
                   <i className="fas fa-phone text-gray-400" />
-                  <input id="telefono" name="telefono" className="pl-2 w-full outline-none border-none rounded-md text-sm" type="text" value={formData.telefono} onChange={handleChange} pattern="[0-9]{10,15}" title="Número de teléfono válido" required />
+                  <input id="telefono" name="telefono" className="pl-2 w-full outline-none border-none rounded-md text-sm" type="text" value={formData.telefono} onChange={handleChange} required />
                 </div>
               </div>
               <div className="flex flex-col space-y-1">
                 <label htmlFor="numero_documento" className="text-gray-700 font-semibold text-xs">Número de Documento</label>
                 <div className="flex items-center border-2 border-yellow-300 py-1 px-2 rounded-md w-full">
                   <i className="fas fa-id-card text-gray-400" />
-                  <input id="numero_documento" name="numero_documento" className="pl-2 w-full outline-none border-none rounded-md text-sm" type="text" value={formData.numero_documento} onChange={handleChange} pattern="[0-9]{8,12}" title="Número de documento válido (8-12 caracteres)" required />
+                  <input id="numero_documento" name="numero_documento" className="pl-2 w-full outline-none border-none rounded-md text-sm" type="text" value={formData.numero_documento} onChange={handleChange} required />
                 </div>
               </div>
               <div className="flex flex-col space-y-1">
                 <label htmlFor="tipo_documento" className="text-gray-700 font-semibold text-xs">Tipo de Documento</label>
                 <div className="flex items-center border-2 border-yellow-300 py-1 px-2 rounded-md w-full">
-                  <i className="fas fa-id-badge text-gray-400" />
-                  <select id="tipo_documento" name="tipo_documento" className="pl-2 w-full outline-none border-none rounded-md text-sm" value={formData.tipo_documento} onChange={handleChange} required>
-                    <option value="" disabled>Tipo de Documento</option>
-                    <option value="Cedula de ciudadania">Cédula de Ciudadanía</option>
-                    <option value="Cedula de extranjeria">Cédula de Extranjería</option>
+                  <i className="fas fa-list text-gray-400" />
+                  <select 
+                    id="tipo_documento" 
+                    name="tipo_documento" 
+                    className="pl-2 w-full outline-none border-none rounded-md text-sm" 
+                    value={formData.tipo_documento} 
+                    onChange={handleChange} 
+                    required
+                  >
+                    <option value="" disabled>Selecciona el tipo de documento</option>
+                    <option value="Cédula de ciudadanía">Cédula de ciudadanía</option>
+                    <option value="Cédula de extranjería">Cédula de extranjería</option>
                   </select>
                 </div>
               </div>
-              {/* Columna 2 (continuación) */}
+
               <div className="flex flex-col space-y-1">
                 <label htmlFor="direccion" className="text-gray-700 font-semibold text-xs">Dirección</label>
                 <div className="flex items-center border-2 border-yellow-300 py-1 px-2 rounded-md w-full">
-                  <i className="fas fa-home text-gray-400" />
+                  <i className="fas fa-map-marker-alt text-gray-400" />
                   <input id="direccion" name="direccion" className="pl-2 w-full outline-none border-none rounded-md text-sm" type="text" value={formData.direccion} onChange={handleChange} required />
                 </div>
               </div>
               <div className="flex flex-col space-y-1">
-                <label htmlFor="email" className="text-gray-700 font-semibold text-xs">Correo Electrónico</label>
+                <label htmlFor="email" className="text-gray-700 font-semibold text-xs">Email</label>
                 <div className="flex items-center border-2 border-yellow-300 py-1 px-2 rounded-md w-full">
                   <i className="fas fa-envelope text-gray-400" />
                   <input id="email" name="email" className="pl-2 w-full outline-none border-none rounded-md text-sm" type="email" value={formData.email} onChange={handleChange} required />
@@ -157,57 +212,73 @@ const FormularioRegiEmp = () => {
                 <label htmlFor="contrasena" className="text-gray-700 font-semibold text-xs">Contraseña</label>
                 <div className="flex items-center border-2 border-yellow-300 py-1 px-2 rounded-md w-full">
                   <i className="fas fa-lock text-gray-400" />
-                  <input id="contrasena" name="contrasena" className="pl-2 w-full outline-none border-none rounded-md text-sm" type="password" value={formData.contrasena} onChange={handleChange} minLength={8} required />
+                  <input id="contrasena" name="contrasena" className="pl-2 w-full outline-none border-none rounded-md text-sm" type="password" value={formData.contrasena} onChange={handleChange} required />
                 </div>
               </div>
-              {/* Campos específicos de rol */}
-              {formData.rol === 'community_manager' && (
-                <div className="rol-specific rol-community_manager">
-                  <label htmlFor="redes" className="text-gray-700 font-semibold text-xs">Redes sociales</label>
-                  <div className="relative">
-                    <select id="redes" name="redes" className="flex items-center border-2 border-yellow-300 py-1 px-2 rounded-md w-full pl-10" value={formData.redes} onChange={handleChange}>
-                      <option value="" disabled>Selecciona una red</option>
-                      <option value="Instagram">Instagram</option>
-                      <option value="Facebook">Facebook</option>
-                      <option value="Tiktok">Tiktok</option>
-                    </select>
-                    <i className="absolute left-2 top-1/2 transform -translate-y-1/2 fas fa-share-alt text-gray-500" />
-                  </div>
+              <div className="flex flex-col space-y-1">
+                <label htmlFor="redes" className="text-gray-700 font-semibold text-xs">Redes Sociales</label>
+                <div className="flex items-center border-2 border-yellow-300 py-1 px-2 rounded-md w-full">
+                  <i className="fas fa-share-alt text-gray-400" />
+                  <select 
+                    id="redes" 
+                    name="redes" 
+                    className="pl-2 w-full outline-none border-none rounded-md text-sm" 
+                    value={formData.redes} 
+                    onChange={handleChange} 
+                    required
+                  >
+                    <option value="">Seleccione una opción</option>
+                    <option value="Facebook">Facebook</option>
+                    <option value="TikTok">TikTok</option>
+                    <option value="Instagram">Instagram</option>
+                  </select>
                 </div>
-              )}
-              {formData.rol === 'mesero' && (
-                <div className="rol-specific rol-mesero">
-                  <label htmlFor="horario" className="text-gray-700 font-semibold text-xs">Horario preferido</label>
-                  <div className="relative">
-                    <select id="horario" name="horario" className="flex items-center border-2 border-yellow-300 py-1 px-2 rounded-md w-full pl-10" value={formData.horario} onChange={handleChange}>
-                      <option value="" disabled>Selecciona un turno</option>
-                      <option value="Mañana">Mañana</option>
-                      <option value="Tarde">Tarde</option>
-                      <option value="Noche">Noche</option>
-                    </select>
-                    <i className="absolute left-2 top-1/2 transform -translate-y-1/2 fas fa-clock text-gray-500" />
-                  </div>
-                </div>
-              )}
-              {formData.rol === 'administrador' && (
-                <div className="rol-specific rol-administrador">
-                  <label htmlFor="titulo" className="text-gray-700 font-semibold text-xs">Título</label>
-                  <div className="relative">
-                    <input type="text" id="titulo" name="titulo" className="flex items-center border-2 border-yellow-300 py-1 px-2 rounded-md w-full pl-10" value={formData.titulo} onChange={handleChange} />
-                    <i className="absolute left-2 top-1/2 transform -translate-y-1/2 fas fa-tag text-gray-500" />
-                  </div>
-                </div>
-              )}
-              {/* Botón de Enviar */}
-              <div className="flex items-center space-x-2 col-span-2 justify-center">
-                <button type="submit" className="bg-yellow-400 text-white font-semibold py-2 px-4 rounded-md hover:bg-yellow-500 transition duration-300">
-                  Registrar
-                </button>
               </div>
+
+              <div className="flex flex-col space-y-1">
+                <label htmlFor="horario" className="text-gray-700 font-semibold text-xs">Horario</label>
+                <div className="flex items-center border-2 border-yellow-300 py-1 px-2 rounded-md w-full">
+                  <i className="fas fa-clock text-gray-400" />
+                  <select 
+                    id="horario" 
+                    name="horario" 
+                    className="pl-2 w-full outline-none border-none rounded-md text-sm" 
+                    value={formData.horario} 
+                    onChange={handleChange} 
+                    
+                  >
+                    <option value="">Seleccione una opción</option>
+                    <option value="Mañana">Mañana</option>
+                    <option value="Tarde">Tarde</option>
+                    <option value="Noche">Noche</option>
+                  </select>
+                </div>
+              </div>
+
+              <div className="flex flex-col space-y-1">
+                <label htmlFor="titulo" className="text-gray-700 font-semibold text-xs">Título</label>
+                <div className="flex items-center border-2 border-yellow-300 py-1 px-2 rounded-md w-full">
+                  <i className="fas fa-tag text-gray-400" />
+                  <input id="titulo" name="titulo" className="pl-2 w-full outline-none border-none rounded-md text-sm" type="text" value={formData.titulo} onChange={handleChange} />
+                </div>
+              </div>
+              <div className="flex flex-col space-y-1">
+                <input 
+                  type="hidden" 
+                  id="estado" 
+                  name="estado" 
+                  value="Activo" 
+                  onChange={handleChange} 
+                  required 
+                />
+              </div>
+
+              <button type="submit" className="bg-yellow-400 text-white py-2 px-4 rounded-md col-span-2">Registrar</button>
             </form>
           </div>
         </div>
       </div>
+      <Footer/>
     </div>
   );
 };
