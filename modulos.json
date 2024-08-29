@@ -1,0 +1,98 @@
+{
+  "usuarios": [
+    {
+      "id": "05cc",
+      "nombre": "nicole ",
+      "telefono": "3148812180",
+      "numero_documento": "1019027709",
+      "tipo_documento": "Cedula de ciudadania",
+      "direccion": "cll 133 # 156 a 20",
+      "barrio": "santa rita",
+      "email": "nicoleorjuela1552@gmail.com",
+      "contrasena": "12585kbhhk",
+      "rol": "Cliente"
+    },
+    {
+      "id": "52f5",
+      "nombre": "nicole ",
+      "telefono": "3148812180",
+      "numero_documento": "1019027709",
+      "tipo_documento": "Cedula de ciudadania",
+      "direccion": "cll 133 # 156 a 20",
+      "barrio": "sdggggg",
+      "email": "est.navila89@smart.edu.co",
+      "contrasena": "hola1234"
+    },
+    {
+      "id": "310d",
+      "nombre": "nicole orjuela",
+      "telefono": "3148812180",
+      "numero_documento": "1019027709",
+      "tipo_documento": "Cedula de ciudadania",
+      "direccion": "cll 133 # 156 a 20",
+      "barrio": "dfsdfsdf",
+      "email": "est.navila8ggggg9@smart.edu.co",
+      "contrasena": "c",
+      "rol": "Cliente",
+      "estado": "Activo"
+    },
+    {
+      "id": "fea5",
+      "nombre": "brownie",
+      "telefono": "3148812180",
+      "numero_documento": "1020023666",
+      "tipo_documento": "Cedula de ciudadania",
+      "direccion": "cll 133 # 156 a 20",
+      "barrio": "santa rita",
+      "email": "lydabrigittep@hotmail.com",
+      "contrasena": "dfdg565665",
+      "rol": "Cliente",
+      "estado": "Activo"
+    },
+    {
+      "id": "cc3e",
+      "nombre": "pablo",
+      "telefono": "3052970187",
+      "numero_documento": "1019087044",
+      "tipo_documento": "Cedula de ciudadania",
+      "direccion": "cll 133 # 156 a 20",
+      "barrio": "santa rita",
+      "email": "pablo@gmail.com",
+      "contrasena": "hola1234",
+      "rol": "Cliente",
+      "estado": "Activo"
+    },
+
+    {
+      "id": "admin01",
+      "nombre": "Ana",
+      "telefono": "3051234567",
+      "numero_documento": "1234567890",
+      "tipo_documento": "Cédula de Ciudadanía",
+      "direccion": "Av. Carrera 7 # 50-21",
+      "barrio": "Centro",
+      "email": "ana.admin@example.com",
+      "contrasena": "admin1234",
+      "rol": "administrador",
+      "estado": "Activo",
+      "titulo": "Administradora General"
+    }
+    
+  ],
+
+  "reservas":[
+
+  ],
+
+  "productos":[
+
+  ],
+
+  "pedidos":[
+
+  ],
+
+  "eventos":[
+
+  ]
+}

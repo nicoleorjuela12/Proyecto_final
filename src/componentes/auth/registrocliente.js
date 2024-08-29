@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import Swal from 'sweetalert2';
+import { useNavigate, Link } from 'react-router-dom';
+import Swal from 'sweetalert2'; // Importa SweetAlert
+import BarraNormal from "../barras/barra_normal";
 
 const FormularioRegistro = () => {
   const [formData, setFormData] = useState({
@@ -12,9 +14,11 @@ const FormularioRegistro = () => {
     barrio: '',
     email: '',
     contrasena: '',
-    rol:'Cliente',
-    estado:'Activo'
+    rol: 'Cliente',
+    estado: 'Activo'
   });
+
+  const navigate = useNavigate(); // Define useNavigate
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -27,15 +31,19 @@ const FormularioRegistro = () => {
     try {
       // Verificar si el usuario ya está registrado
       const response = await axios.get(`http://localhost:3000/usuarios?email=${encodeURIComponent(formData.email)}`);
-      const existingUsers = response.data;
+      const existingEmails = response.data;
 
-      if (existingUsers.length > 0) {
+      const documentoResponse = await axios.get(`http://localhost:3000/usuarios?numero_documento=${encodeURIComponent(formData.numero_documento)}`);
+      const existingDocumentos = documentoResponse.data;
+
+      if (existingEmails.length > 0 || existingDocumentos.length > 0) {
         // Usuario ya registrado
         Swal.fire({
           icon: 'error',
           title: 'Error',
-          text: 'El usuario ya está registrado. Por favor, usa otro correo electrónico.',
+          text: 'El usuario ya está registrado. Por favor, usa otro correo electrónico o número de documento.',
         });
+  
 
         // Limpiar el formulario
         setFormData({
@@ -59,8 +67,8 @@ const FormularioRegistro = () => {
             title: 'Éxito',
             text: 'Registro completado exitosamente.',
           }).then(() => {
-            // Redirigir al usuario a la página de inicio
-            window.location.href = '../index.html';
+            // Redirigir al usuario a la página de inicio usando useNavigate
+            navigate('/'); // Redirige a la página de inicio
           });
         } else {
           // Problema con el registro
@@ -105,7 +113,7 @@ const FormularioRegistro = () => {
           }
         `}
       </style>
-      <div id="navbar" />
+      <BarraNormal />
       <div className="h-screen flex flex-col lg:flex-row mt-0">
         {/* Imagen de fondo */}
         <div className="hidden lg:flex w-full lg:w-1/2 espacio_imagen1 justify-around items-center">
@@ -150,25 +158,29 @@ const FormularioRegistro = () => {
               <div className="flex flex-col space-y-1">
                 <label htmlFor="tipo_documento" className="text-gray-700 font-semibold text-xs">Tipo de Documento</label>
                 <div className="flex items-center border-2 border-yellow-300 py-1 px-2 rounded-md w-full">
-                  <i className="fas fa-id-badge text-gray-400" />
+                  <i className="fas fa-id-card-alt text-gray-400" />
                   <select id="tipo_documento" className="pl-2 w-full outline-none border-none rounded-md text-sm" name="tipo_documento" value={formData.tipo_documento} onChange={handleChange} required>
-                    <option value="Cedula de ciudadania">Cédula de Ciudadanía</option>
-                    <option value="Cedula de extranjeria">Cédula de Extranjería</option>
+                    <option value="">Selecciona una opción</option>
+                    <option value="Cedula de ciudadania">Cédula de ciudadanía</option>
+                    <option value="Cedula de extranjeria">Cédula de extranjería</option>
+                    <option value="Pasaporte">Pasaporte</option>
+                    <option value="NIT">NIT</option>
+                    <option value="Otro">Otro</option>
                   </select>
                 </div>
               </div>
-              {/* Columna 2 (continuación) */}
+              {/* Columna 2 */}
               <div className="flex flex-col space-y-1">
                 <label htmlFor="direccion" className="text-gray-700 font-semibold text-xs">Dirección</label>
                 <div className="flex items-center border-2 border-yellow-300 py-1 px-2 rounded-md w-full">
-                  <i className="fas fa-home text-gray-400" />
+                  <i className="fas fa-map-marker-alt text-gray-400" />
                   <input id="direccion" className="pl-2 w-full outline-none border-none rounded-md text-sm" type="text" name="direccion" value={formData.direccion} onChange={handleChange} required />
                 </div>
               </div>
               <div className="flex flex-col space-y-1">
                 <label htmlFor="barrio" className="text-gray-700 font-semibold text-xs">Barrio</label>
                 <div className="flex items-center border-2 border-yellow-300 py-1 px-2 rounded-md w-full">
-                  <i className="fas fa-map-marker-alt text-gray-400" />
+                  <i className="fas fa-building text-gray-400" />
                   <input id="barrio" className="pl-2 w-full outline-none border-none rounded-md text-sm" type="text" name="barrio" value={formData.barrio} onChange={handleChange} required />
                 </div>
               </div>
@@ -183,27 +195,27 @@ const FormularioRegistro = () => {
                 <label htmlFor="contrasena" className="text-gray-700 font-semibold text-xs">Contraseña</label>
                 <div className="flex items-center border-2 border-yellow-300 py-1 px-2 rounded-md w-full">
                   <i className="fas fa-lock text-gray-400" />
-                  <input id="contrasena" className="pl-2 w-full outline-none border-none rounded-md text-sm" type="password" name="contrasena" minLength={8} value={formData.contrasena} onChange={handleChange} required />
+                  <input id="contrasena" className="pl-2 w-full outline-none border-none rounded-md text-sm" type="password" name="contrasena" value={formData.contrasena} onChange={handleChange} required />
                 </div>
               </div>
-              {/* Ocultando el rol */}
-              <div className="hidden">
-                <label htmlFor="rol" className="text-gray-700 font-semibold text-xs">Rol</label>
-                <div className="flex items-center border-2 border-yellow-300 py-1 px-2 rounded-md w-full">
-                  <i className="fas fa-user-tag text-gray-400" />
-                  <select id="rol" className="pl-2 w-full outline-none border-none rounded-md text-sm" name="rol" value="Cliente">
-                    <option value="Cliente">Cliente</option>
+
+              <div class="hidden">
+                <label for="rol" class="text-gray-700 font-semibold text-xs">Rol</label>
+                <div class="flex items-center border-2 border-yellow-300 py-1 px-2 rounded-md w-full">
+                  <i class="fas fa-user-tag text-gray-400"></i>
+                  <select id="rol" class="pl-2 w-full outline-none border-none rounded-md text-sm" name="rol" required>
+                    <option value="Cliente" selected>Cliente</option>
                     <option value="Mesero">Mesero</option>
                     <option value="Administrador">Administrador</option>
                     <option value="Community Manager">Community Manager</option>
                   </select>
                 </div>
               </div>
-              <div className="flex items-center space-x-2 col-span-2 justify-center">
-                <button type="submit" className="bg-yellow-400 text-white font-semibold py-2 px-4 rounded-md hover:bg-yellow-500 transition duration-300">
-                  Registrarse
-                </button>
+
+              <div className="col-span-2 flex justify-center">
+                <button type="submit" className="text-center w-full bg-yellow-400 hover:bg-yellow-300 text-white py-2 px-4 rounded-md text-lg">Registrarse</button>
               </div>
+              <p className="text-xs text-center col-span-2">¿Ya tienes una cuenta? <Link to="/login" className="text-yellow-400 hover:text-yellow-300 font-semibold">Iniciar sesión</Link></p>
             </form>
           </div>
         </div>
@@ -213,4 +225,3 @@ const FormularioRegistro = () => {
 };
 
 export default FormularioRegistro;
-
