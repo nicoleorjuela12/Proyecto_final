@@ -1,0 +1,127 @@
+/* Contenedor principal que agrupa todos los contenedores individuales */
+body {
+    position: relative;
+    margin: 0;
+    height: 100%;
+    width: 100%; /* Asegúrate de que el body ocupe toda la altura de la ventana */
+}
+
+.background-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url(https://media.istockphoto.com/id/539199982/es/foto/desenfocar-el-bar-oscuro-o-la-cafeter%C3%ADa-por-la-noche.jpg?s=612x612&w=0&k=20&c=SYVzgdXGSM4yjpYaSQFbcTUzr8-cqppIBNgJqcHSZgU=);
+    background-size: cover;
+    background-position: center;
+    filter: brightness(50%); /* Ajusta el porcentaje según el nivel de oscuridad deseado */
+    z-index: -1; /* Coloca la capa detrás del contenido */
+}
+
+.reservation-form {
+    display: flex;
+    justify-content: center; /* Centra los contenedores horizontalmente */
+    align-items: center; /* Centra los contenedores verticalmente */
+    gap: 20px; /* Espacio entre los contenedores */
+    height: 100vh; /* Altura completa de la ventana */
+    background-color: rgba(255, 255, 255, 0); /* Color de fondo opcional para toda la sección */
+    margin-top: -10%;
+}
+
+/* Estilo general para los contenedores */
+.container {
+    background-color: rgba(255, 255, 255, 0.5); /* Fondo blanco semitransparente */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    backdrop-filter: blur(10px); /* Aplica un desenfoque al fondo detrás del elemento */
+}
+
+/* Contenedor para selección de personas */
+.select-people-container {
+    width: 300px; /* Ajusta el ancho deseado */
+    height: 150px; /* Ajusta la altura deseada */
+}
+
+/* Contenedor para selección de fecha */
+.select-date-container {
+    width: 300px; /* Ajusta el ancho deseado */
+    height: 150px; /* Ajusta la altura deseada */
+}
+
+/* Contenedor para selección de hora */
+.select-time-container {
+    width: 300px; /* Ajusta el ancho deseado */
+    height: 150px; /* Ajusta la altura deseada */
+}
+
+/* Título y textos descriptivos */
+.container h2 {
+    color: #000000;
+    margin-bottom: 10px;
+}
+
+.container p {
+    color: #ffffff;
+    margin-bottom: 15px;
+}
+
+/* Estilo para los botones de selección de personas */
+.people-selector {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.people-btn {
+    padding: 10px;
+    background-color: rgb(255, 251, 26);
+    color: black;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.people-btn:hover {
+    background-color: rgb(255, 251, 26);
+}
+
+/* Estilo para el campo de fecha y el selector de hora */
+input[type="date"], 
+select {
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    width: 100%;
+    max-width: 200px;
+    box-sizing: border-box;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+/* Botón de continuar */
+.continue-btn {
+    width: 100%;
+    background-color: rgb(255, 251, 26);
+    color: #000000;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.continue-btn:hover {
+    background-color: #ffffff;
+}
+
+h1 {
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    color: aliceblue;
+    text-align: center;
+}
